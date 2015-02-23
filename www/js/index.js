@@ -58,7 +58,7 @@ $(function() {
 
 	function Distance()
 	{
-		/*var lat = 0;
+		var lat = 0;
 		var lng = 0;
 		
 		getLocation();
@@ -80,7 +80,7 @@ $(function() {
 			var html = "<li>Code: "+error.code+", message: "+error.message+"</li>";
 		    
 		    AppendToListView(html);
-		}*/
+		}
 
 
 		/*$.get( "https://api.eet.nu/venues", function( data ) {
