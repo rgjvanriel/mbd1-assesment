@@ -61,8 +61,8 @@ $(function() {
 		var lat = 0;
 		var lng = 0;
 		
-		getLocation();
 		ClearListView();
+		getLocation();
 
 		function getLocation() {
 		    navigator.geolocation.getCurrentPosition(onSuccess, onError);
@@ -73,33 +73,28 @@ $(function() {
 		    lng = position.coords.longitude;
 		    var html = "<li>lat: "+lat+", long: "+lng+"</li>";
 
-		    alert(html);
-		    
-		    AppendToListView(html);
+		    $.get( "https://api.eet.nu/venues?max_distance=5000&geolocation="+lat+","+lng, function( data ) {
+				var result = data['results'];
+				ClearListView();
+
+				$.each(result, function(key, value) {
+					var html = "<li><a href='"+value.url+"'>";
+					if(value.images.cropped[0] != null)
+					{
+						html += "<img class='thumb' src='"+value.images.cropped[0]+"' alt='' title=''>";
+					}
+					html += "<strong class='title'>"+value.name+"</strong><span>Categorie: "+value.category+"</span></a></li>";
+
+				    AppendToListView(html);
+				});
+			});
 		}
 
 		function onError(error) {
-			var html = "<li>Code: "+error.code+", message: "+error.message+"</li>";
-		    
-		    AppendToListView(html);
+			var html = "<li>U moet uw locatie aanzetten om gebruik te maken van deze functie</li>";
+
+			AppendToListView(html);
 		}
-
-
-		/*$.get( "https://api.eet.nu/venues", function( data ) {
-			var result = data['results'];
-			ClearListView();
-
-			$.each(result, function(key, value) {
-				var html = "<li><a href='"+value.url+"'>";
-				if(value.images.cropped[0] != null)
-				{
-					html += "<img class='thumb' src='"+value.images.cropped[0]+"' alt='' title=''>";
-				}
-				html += "<strong class='title'>"+value.name+"</strong><span>Categorie: "+value.category+"</span></a></li>";
-
-			    AppendToListView(html);
-			});
-		});*/
 	}
 
 	function ClearListView()
