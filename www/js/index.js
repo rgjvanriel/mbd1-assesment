@@ -65,13 +65,15 @@ $(function() {
 		ClearListView();
 
 		function getLocation() {
-		    navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
+		    navigator.geolocation.getCurrentPosition(onSuccess, onError);
 		}
 		
 		function onSuccess(position) {
 		    lat = position.coords.latitude;
 		    lng = position.coords.longitude;
 		    var html = "<li>lat: "+lat+", long: "+lng+"</li>";
+
+		    alert(html);
 		    
 		    AppendToListView(html);
 		}
